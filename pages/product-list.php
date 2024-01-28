@@ -103,6 +103,9 @@ $rowcount = $result->num_rows;
             </div>
          </nav>
       </div>
+
+
+      <!-- main content -->
       <div id="layoutSidenav_content">
          <main>
             <div class="container-fluid px-4">
@@ -173,72 +176,84 @@ $rowcount = $result->num_rows;
 
                         <!-- accordion body -->
                         <div id="collapse<?= $product["product_id"] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $product["product_id"] ?>" data-bs-parent="#accordion<?= $product["product_id"] ?>">
-                           <div class="accordion-body p-3">
+                           <div class="accordion-body p-3 position-relative">
 
-                              <!-- for the img -->
-                              <!-- <h5>All images</h5> -->
-                              <div class="pic d-flex flex-wrap align-content-center pb-3">
-                                 <?php
-                                 // foreach() : 
-                                 ?>
-                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                 <?php
-                                 // endforeach; 
-                                 ?>
 
-                                 <!-- add img -->
-                                 <a class="d-flex justify-content-center align-items-center" href="">
-                                    <i class="bi bi-plus fs-1"></i>
-                                 </a>
 
+
+                              <div class="row">
+                                 <div class="col">
+                                    <!-- for the img -->
+                                    <h5>All images</h5>
+                                    <div class="pic d-flex flex-wrap align-content-center ">
+                                       <?php
+                                       // foreach() : 
+                                       ?>
+                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                       <?php
+                                       // endforeach; 
+                                       ?>
+                                       <!-- add img -->
+                                       <a class="d-flex justify-content-center align-items-center" href="">
+                                          <i class="bi bi-plus fs-1"></i>
+                                       </a>
+                                    </div>
+                                 </div>
+                                 <div class="col border-start ps-3">
+                                    <div class="row col-12">
+                                       <div class="col-6">
+                                          <div class="mb-3 ">
+                                             <h5>Introduction</h5>
+                                             <div class=""><?= $product["introduction"] ?></div>
+                                          </div>
+                                       </div>
+                                       <div class="col-6 ps-3">
+
+                                       <!-- Details -->
+                                          <h5>Details</h5>
+                                          <ul class="list-unstyled">
+                                             <?php if ($product["product_category_id"] == 1) : ?>
+                                                <li class="">Brand : <?= $product["brand"] ?></li>
+                                                <li class="">Size : <?= $product["size"] ?></li>
+                                                <li class="">Top : <?= $product["top"] ?></li>
+                                                <li class="">BAS : <?= $product["back_and_sides"] ?></li>
+                                                <li class="">Neck : <?= $product["neck"] ?></li>
+                                                <li class="">FB : <?= $product["fingerboard"] ?></li>
+                                             <?php elseif ($product["product_category_id"] == 2) : ?>
+                                                <ul class="list-unstyled">
+                                                   <li class="">Brand : <?= $product["brand"] ?></li>
+                                                   <li class="">Size : <?= $product["size"] ?></li>
+                                                </ul>
+                                             <?php elseif ($product["product_category_id"] == 3) : ?>
+                                                <ul class="list-unstyled">
+                                                   <li class="">Brand : <?= $product["brand"] ?></li>
+                                                   <li class="">bow : <?= $product["bow"] ?></li>
+                                                </ul>
+                                             <?php elseif ($product["product_category_id"] == 4) : ?>
+                                                <ul class="list-unstyled">
+                                                   <li class="">Brand : <?= $product["brand"] ?></li>
+                                                </ul>
+                                             <?php endif; ?>
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              
+
+                              <!-- Edit btn -->
+                              <div class="col d-flex justify-content-end align-items-end position-absolute fixed-bottom ">
+                                 <!-- edit -->
+                                 <i class="bi bi-pencil fs-3 edit-icon px-2 pb-2" id="contentEdit"></i>
+                                 <!-- delete -->
+                                 <i class="bi bi-trash3 fs-3 text-danger  px-2 pb-2"></i>
                               </div>
 
-                              <!-- details -->
-                              <div class="row col-12">
-                                 <div class="col">
-                                    <h5>Details</h5>
-                                    <ul class="list-unstyled">
-                                       <?php if ($product["product_category_id"] == 1) : ?>
-                                          <li class="py-1">Brand : <?= $product["brand"] ?></li>
-                                          <li class="py-1">Size : <?= $product["size"] ?></li>
-                                          <li class="py-1">Top : <?= $product["top"] ?></li>
-                                          <li class="py-1">BAS : <?= $product["back_and_sides"] ?></li>
-                                          <li class="py-1">Neck : <?= $product["neck"] ?></li>
-                                          <li class="py-1">FB : <?= $product["fingerboard"] ?></li>
-                                       <?php elseif ($product["product_category_id"] == 2) : ?>
-                                          <ul class="list-unstyled">
-                                             <li class="py-1">Brand : <?= $product["brand"] ?></li>
-                                             <li class="py-1">Size : <?= $product["size"] ?></li>
-                                          </ul>
-                                       <?php elseif ($product["product_category_id"] == 3) : ?>
-                                          <ul class="list-unstyled">
-                                             <li class="py-1">Brand : <?= $product["brand"] ?></li>
-                                             <li class="py-1">bow : <?= $product["bow"] ?></li>
-                                          </ul>
-                                       <?php elseif ($product["product_category_id"] == 4) : ?>
-                                          <ul class="list-unstyled">
-                                             <li class="py-1">Brand : <?= $product["brand"] ?></li>
-                                          </ul>
-                                       <?php endif; ?>
-                                    </ul>
-                                 </div>
-
-                                 <div class="col">
-                                    <h5>Introduction</h5>
-                                    <div><?= $product["introduction"] ?></div>
-                                 </div>
-
-                                 <div class="col d-flex justify-content-end align-items-end">
-                                    <i class="bi bi-pencil fs-3 ms-2 edit-icon"></i>
-                                    <i class="bi bi-trash3 fs-3 text-danger ms-4"></i>
-                                 </div>
-
-                              </div>
                            </div>
                         </div>
                      </div>
@@ -258,8 +273,19 @@ $rowcount = $result->num_rows;
                </div>
             </div>
          </footer>
+         
       </div>
    </div>
+
+
+
+
+
+   <script>
+
+   
+   
+   </script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
    <script src="js/scripts.js"></script>
 </body>
