@@ -1,10 +1,15 @@
 <?php
 require_once("../db_violin_connect.php");
 
+
+//product
 $sql = "SELECT * FROM product";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
+$rowcount = $result->num_rows;
 
+
+//image
 
 
 
@@ -18,11 +23,6 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 ?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,6 +36,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
    <link href="css/styles.css" rel="stylesheet" />
    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
    <style>
       .img {
          width: auto;
@@ -47,8 +49,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
          height: 100px;
       }
 
-      .large-icon {
-         font-size: 2rem;
+      .align-img {
+         width: 100px;
       }
    </style>
 </head>
@@ -104,24 +106,35 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       <div id="layoutSidenav_content">
          <main>
             <div class="container-fluid px-4">
-               <h1 class="mt-4">PRODUCT LIST</h1>
-               <ol class="breadcrumb mb-4">
-                  <li class="breadcrumb-item"><a href="index.php">ELEGANZA Studio</a></li>
-                  <li class="breadcrumb-item active">Product list</li>
-               </ol>
+               <div class="d-flex justify-content-between align-items-center my-4">
+                  <div>
+                     <h1 class="mb-0">PRODUCT LIST</h1>
+                     <div class="d-flex align-content-center">
+                        <i class="bi bi-search fs-3 me-3"></i>
+                        <ol class="breadcrumb mb-4">
+                           <li class="breadcrumb-item"><a href="index.php">ELEGANZA Studio</a></li>
+                           <li class="breadcrumb-item active">Product list</li>
+                        </ol>
+                     </div>
+                  </div>
+                  <div class="d-flex justify-content-end align-items-center flex-grow-1">
+                     <i class="bi bi-plus-lg fs-1 m-2"></i>
+                  </div>
+               </div>
+
+               <div class="py-2">
+                  <?= $rowcount ?> Products
+               </div>
 
                <!-- title -->
-               <div class="row col-12 px-4 py-2">
-                  <div class="col">
+               <div class="row col-12  py-2  pe-3">
+                  <div class="col ">
                      <h5>Image</h5>
                   </div>
-                  <div class="col-3">
+                  <div class="col-3 ps-4 pe-2">
                      <h5>Name</h5>
                   </div>
-                  <div class="col">
-                     <h5>Brand</strong>
-                  </div>
-                  <div class="col">
+                  <div class="col ps-3">
                      <h5>Price</h5>
                   </div>
                   <div class="col">
@@ -132,80 +145,104 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                   </div>
                </div>
 
+               <?php foreach ($rows as $product) : ?>
 
-               <?php foreach($rows as $product) :?>
+                  <!-- product -->
+                  <div class="accordion" id="accordion<?= $product["product_id"] ?>">
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading<?= $product["product_id"] ?>">
+                           <button class="accordion-button collapsed p-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $product["product_id"] ?>" aria-expanded="false" aria-controls="collapse<?= $product["product_id"] ?>">
+                              <div class="row d-flex col-12 align-items-center">
+                                 <div class="col text-start">
+                                    <div class="align-img text-center">
+                                       <img class="objf-cover img" src="../images/<?= $product["img"] ?>" alt="">
+                                    </div>
+                                 </div>
+                                 <div class="col-3 pe-5">
+                                    <div class="w-75">
+                                       <?= $product["name"] ?>
+                                    </div>
+                                 </div>
+                                 <div class="col">$<?= $product["price"] ?></div>
+                                 <div class="col"><?= $product["num"] ?></div>
+                                 <div class="col">On stage</div>
+                              </div>
+                           </button>
+                        </h2>
 
-                  
 
-               <!-- product -->
-               <div class="accordion" id="accordionFlushExample">
-                  <div class="accordion-item">
-                     <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed p-4" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                           <div class="row d-flex col-12 align-items-center">
-                              <div class="col text-center"><img class="objf-cover img" src="../images/<?=$product["img"]?>" alt=""></div>
-                              <div class="col-3"><?=$product["name"]?></div>
-                              <div class="col"><?=$product["brand"]?></div>
-                              <div class="col">$<?=$product["price"]?></div>
-                              <div class="col"><?=$product["num"]?></div>
-                              <div class="col">On stage</div>
-                           </div>
-                        </button>
-                     </h2>
+                        <!-- accordion body -->
+                        <div id="collapse<?= $product["product_id"] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $product["product_id"] ?>" data-bs-parent="#accordion<?= $product["product_id"] ?>">
+                           <div class="accordion-body p-3">
 
-                     <!-- accordion body -->
-                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body py-4">
+                              <!-- for the img -->
+                              <!-- <h5>All images</h5> -->
+                              <div class="pic d-flex flex-wrap align-content-center pb-3">
+                                 <?php
+                                 // foreach() : 
+                                 ?>
+                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <?php
+                                 // endforeach; 
+                                 ?>
 
-                           <!-- for the img -->
-                           <h5>All images</h5>
-                           <div class="pic d-flex flex-wrap align-content-center pb-3">
-                              <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                              <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                              <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                              <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                              <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                              <img class="img me-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                 <!-- add img -->
+                                 <a class="d-flex justify-content-center align-items-center" href="">
+                                    <i class="bi bi-plus fs-1"></i>
+                                 </a>
 
-                              <!-- add img -->
-                              <a class="d-flex justify-content-center align-items-center" href="">
-                              <i class="bi bi-plus large-icon"></i>
-                              </a>
-
-                           </div>
-
-                           <hr>
-
-                           <!-- details -->
-                           <div class="row col-12 mt-4">
-
-                              <div class="col">
-                                 <h5>Details</h5>
-                                 <ul class="list-unstyled">
-                                    <li class="py-1">Size:4/4</li>
-                                    <li class="py-1">Top:scpure</li>
-                                    <li class="py-1">BAS:maple</li>
-                                    <li class="py-1">Neck:maple:</li>
-                                    <li class="py-1">FB:</li>
-                                 </ul>
                               </div>
 
-                              <div class="col">
-                                 <h5>Introduce</h5>
-                                 <p>Size: 4/4 ,Premium instrument ,Balanced throughout the entire sound spectrum ,Bottom, neck and sides made of European maple ,Top made of European spru</p>
-                              </div>
+                              <!-- details -->
+                              <div class="row col-12">
+                                 <div class="col">
+                                    <h5>Details</h5>
+                                    <ul class="list-unstyled">
+                                       <?php if ($product["product_category_id"] == 1) : ?>
+                                          <li class="py-1">Brand : <?= $product["brand"] ?></li>
+                                          <li class="py-1">Size : <?= $product["size"] ?></li>
+                                          <li class="py-1">Top : <?= $product["top"] ?></li>
+                                          <li class="py-1">BAS : <?= $product["back_and_sides"] ?></li>
+                                          <li class="py-1">Neck : <?= $product["neck"] ?></li>
+                                          <li class="py-1">FB : <?= $product["fingerboard"] ?></li>
+                                       <?php elseif ($product["product_category_id"] == 2) : ?>
+                                          <ul class="list-unstyled">
+                                             <li class="py-1">Brand : <?= $product["brand"] ?></li>
+                                             <li class="py-1">Size : <?= $product["size"] ?></li>
+                                          </ul>
+                                       <?php elseif ($product["product_category_id"] == 3) : ?>
+                                          <ul class="list-unstyled">
+                                             <li class="py-1">Brand : <?= $product["brand"] ?></li>
+                                             <li class="py-1">bow : <?= $product["bow"] ?></li>
+                                          </ul>
+                                       <?php elseif ($product["product_category_id"] == 4) : ?>
+                                          <ul class="list-unstyled">
+                                             <li class="py-1">Brand : <?= $product["brand"] ?></li>
+                                          </ul>
+                                       <?php endif; ?>
+                                    </ul>
+                                 </div>
 
-                              <div class="col d-flex justify-content-end align-items-end">
-                                 <i class="bi bi-pencil large-icon ms-2"></i>
-                                 <i class="bi bi-trash3 large-icon text-danger ms-4"></i>
+                                 <div class="col">
+                                    <h5>Introduction</h5>
+                                    <div><?= $product["introduction"] ?></div>
+                                 </div>
+
+                                 <div class="col d-flex justify-content-end align-items-end">
+                                    <i class="bi bi-pencil fs-3 ms-2 edit-icon"></i>
+                                    <i class="bi bi-trash3 fs-3 text-danger ms-4"></i>
+                                 </div>
+
                               </div>
                            </div>
-
-
                         </div>
                      </div>
                   </div>
-               </div>
 
                <?php endforeach; ?>
 
