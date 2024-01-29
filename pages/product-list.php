@@ -14,14 +14,6 @@ $rowcount = $result->num_rows;
 
 
 
-
-
-
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +47,19 @@ $rowcount = $result->num_rows;
 
       .toggle-input {
          display: none;
+      }
+
+      p {
+         margin: 0;
+      }
+
+      .form-control {
+         white-space: normal;
+      }
+
+      .editBtn {
+         width: fit-content;
+         margin-left: auto;
       }
    </style>
 </head>
@@ -154,178 +159,209 @@ $rowcount = $result->num_rows;
 
                <?php foreach ($rows as $product) : ?>
 
-                  <!-- product -->
-                  <div class="accordion" id="accordion<?= $product["product_id"] ?>">
-                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading<?= $product["product_id"] ?>">
-                           <button class="accordion-button collapsed p-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $product["product_id"] ?>" aria-expanded="false" aria-controls="collapse<?= $product["product_id"] ?>">
+                  <form action="product-edit.php" method="post">
 
-                              <!-- product -->
-                              <div class="row d-flex col-12 align-items-center">
-                                 <div class="col text-start">
-                                    <div class="align-img text-center">
-                                       <img class="objf-cover img" src="../images/<?= $product["img"] ?>" alt="">
+                     <!-- product -->
+                     <div class="accordion" id="accordion<?= $product["product_id"] ?>">
+                        <div class="accordion-item">
+                           <h2 class="accordion-header" id="heading<?= $product["product_id"] ?>">
+                              <button class="accordion-button collapsed p-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $product["product_id"] ?>" aria-expanded="false" aria-controls="collapse<?= $product["product_id"] ?>">
+
+                                 <!-- product -->
+                                 <div class="row d-flex col-12 align-items-center">
+                                    <div class="col text-start">
+                                       <div class="align-img text-center">
+                                          <img class="objf-cover img" src="../images/<?= $product["img"] ?>" alt="">
+                                       </div>
+                                    </div>
+                                    <div class="col-3 pe-5">
+                                       <div class="w-75">
+                                          <p id="nameText<?= $product["product_id"] ?>">
+                                             <?= $product["name"] ?>
+                                          </p>
+                                          <input value="<?= $product["name"] ?>" type="text" class="form-control toggle-input" id="nameInput<?= $product["product_id"] ?>">
+                                       </div>
+                                    </div>
+                                    <div class="col">
+                                       <div class="w-50">
+                                          <p id="priceText<?= $product["product_id"] ?>">
+                                             $<?= $product["price"] ?>
+                                          </p>
+
+                                          <input value="<?= $product["price"] ?>" type="text" class="form-control toggle-input" id="priceInput<?= $product["product_id"] ?>">
+                                       </div>
+                                    </div>
+                                    <div class="col">
+                                       <div class="w-25">
+                                          <p id="numText<?= $product["product_id"] ?>">
+                                             <?= $product["num"] ?>
+                                          </p>
+                                          <input value="<?= $product["num"] ?>" type="text" class="form-control toggle-input" id="numInput<?= $product["product_id"] ?>">
+                                       </div>
+                                    </div>
+                                    <div class="col">
+                                       <div>
+                                          On stage
+                                          <!-- put status here -->
+                                       </div>
                                     </div>
                                  </div>
-                                 <div class="col-3 pe-5">
-                                    <div class="w-75">
-                                       <?= $product["name"] ?>
-                                       <input value="<?= $product["name"] ?>" type="text" class="form-control toggle-input" id="nameInput<?= $product["product_id"] ?>">
+                              </button>
+                           </h2>
 
+                           <!-- accordion body -->
+                           <div id="collapse<?= $product["product_id"] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $product["product_id"] ?>" data-bs-parent="#accordion<?= $product["product_id"] ?>">
+                              <div class="accordion-body p-3 position-relative">
+
+                                 <div class="row">
+                                    <div class="col">
+                                       <!-- for the img -->
+                                       <h5>All images</h5>
+                                       <div class="pic d-flex flex-wrap align-content-center ">
+                                          <?php
+                                          // foreach() : 
+                                          ?>
+                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+                                          <?php
+                                          // endforeach; 
+                                          ?>
+                                          <!-- add img -->
+                                          <a class="d-flex justify-content-center align-items-center" href="">
+                                             <i class="bi bi-plus fs-1"></i>
+                                          </a>
+                                       </div>
                                     </div>
-                                 </div>
-                                 <div class="col">
-                                    <div>
-                                       $<?= $product["price"] ?>
-                                       <input value="$<?= $product["price"] ?>" type="text" class="form-control toggle-input" id="priceInput<?= $product["product_id"] ?>">
-                                    </div>
-                                 </div>
+                                    <div class="col border-start ps-3">
 
-                                 <div class="col">
-                                    <div>
-                                       <?= $product["num"] ?>
-                                       <input value="<?= $product["num"] ?>" type="text" class="form-control toggle-input" id="numInput<?= $product["product_id"] ?>">
-                                    </div>
-                                 </div>
-                                 <div class="col">
-                                    <div>
-                                       On stage
-                                       <!-- put status here -->
-                                    </div>
-                                 </div>
-                              </div>
+                                       <div class="row col-12">
 
-
-                           </button>
-                        </h2>
-
-
-                        <!-- accordion body -->
-                        <div id="collapse<?= $product["product_id"] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $product["product_id"] ?>" data-bs-parent="#accordion<?= $product["product_id"] ?>">
-                           <div class="accordion-body p-3 position-relative">
-
-
-
-
-                              <div class="row">
-                                 <div class="col">
-                                    <!-- for the img -->
-                                    <h5>All images</h5>
-                                    <div class="pic d-flex flex-wrap align-content-center ">
-                                       <?php
-                                       // foreach() : 
-                                       ?>
-                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                       <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                       <?php
-                                       // endforeach; 
-                                       ?>
-                                       <!-- add img -->
-                                       <a class="d-flex justify-content-center align-items-center" href="">
-                                          <i class="bi bi-plus fs-1"></i>
-                                       </a>
-                                    </div>
-                                 </div>
-                                 <div class="col border-start ps-3">
-                                    <div class="row col-12">
-                                       <div class="col-6">
-                                          <div class="mb-3 ">
-                                             <h5>Introduction</h5>
-                                             <div class="">
-                                                <div>
-                                                   <?= $product["introduction"] ?>
-                                                   <input value="<?= $product["introduction"] ?>" type="textarea" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>">
+                                          <div class="col-6">
+                                             <div class="mb-3 ">
+                                                <h5>Introduction</h5>
+                                                <div class="pe-3">
+                                                   <div>
+                                                      <p id="introText<?= $product["product_id"] ?>">
+                                                         <?= $product["introduction"] ?>
+                                                      </p>
+                                                      <input value="<?= $product["introduction"] ?>" placeholder="Enter content" type="textarea" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>">
+                                                   </div>
                                                 </div>
                                              </div>
                                           </div>
-                                       </div>
-                                       <div class="col-6 ps-3">
 
-                                          <!-- Details -->
-                                          <h5>Details</h5>
-                                          <ul class="list-unstyled">
-                                             <?php if ($product["product_category_id"] == 1) : ?>
-                                                <li class="">Brand :
-                                                   <?= $product["brand"] ?>
-                                                   <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
-                                                </li>
-                                                <li class="">Size :
-                                                   <?= $product["size"] ?>
-                                                   <input value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
-                                                </li>
-                                                <li class="">Top :
-                                                   <?= $product["top"] ?><input value="<?= $product["top"] ?>" type="text" class="form-control toggle-input" id="topInput<?= $product["product_id"] ?>">
-                                                </li>
-                                                <li class="">BAS :
-                                                   <?= $product["back_and_sides"] ?>
-                                                   <input value="<?= $product["back_and_sides"] ?>" type="text" class="form-control toggle-input" id="basInput<?= $product["product_id"] ?>">
-                                                </li>
-                                                <li class="">Neck :
-                                                   <?= $product["neck"] ?>
-                                                   <input value="<?= $product["neck"] ?>" type="text" class="form-control toggle-input" id="neckInput<?= $product["product_id"] ?>">
-                                                </li>
-                                                <li class="">FB :
-                                                   <?= $product["fingerboard"] ?>
-                                                   <input value="<?= $product["fingerboard"] ?>" type="text" class="form-control toggle-input" id="fingerInput<?= $product["product_id"] ?>">
-                                                </li>
-                                             <?php elseif ($product["product_category_id"] == 2) : ?>
-                                                <ul class="list-unstyled">
-                                                   <li class="">Brand :
-                                                      <?= $product["brand"] ?>
+                                          <div class="col-6 ps-3">
+                                             <!-- Details -->
+                                             <h5>Details</h5>
+                                             <ul class="list-unstyled pe-3">
+                                                <?php if ($product["product_category_id"] == 1) : ?>
+                                                   <li class="">
+                                                      <span id="brandText<?= $product["product_id"] ?>">
+                                                         Brand : <?= $product["brand"] ?>
+                                                      </span>
+                                                      <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
                                                    </li>
-                                                   <li class="">Size :
-                                                      <?= $product["size"] ?>
+                                                   <li class="">
+                                                      <span id="sizeText<?= $product["product_id"] ?>">
+                                                         Size : <?= $product["size"] ?>
+                                                      </span>
+                                                      <input value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
                                                    </li>
-                                                </ul>
-                                             <?php elseif ($product["product_category_id"] == 3) : ?>
-                                                <ul class="list-unstyled">
-                                                   <li class="">Brand :
-                                                      <?= $product["brand"] ?>
+                                                   <li class="">
+                                                      <span id="topText<?= $product["product_id"] ?>">
+                                                         Top : <?= $product["top"] ?>
+                                                      </span>
+                                                      <input value="<?= $product["top"] ?>" type="text" class="form-control toggle-input" id="topInput<?= $product["product_id"] ?>">
                                                    </li>
-                                                   <li class="">bow :
-                                                      <?= $product["bow"] ?>
+                                                   <li class="">
+                                                      <span id="basText<?= $product["product_id"] ?>">
+                                                         BAS : <?= $product["back_and_sides"] ?>
+                                                      </span>
+                                                      <input value="<?= $product["back_and_sides"] ?>" type="text" class="form-control toggle-input" id="basInput<?= $product["product_id"] ?>">
                                                    </li>
-                                                </ul>
-                                             <?php elseif ($product["product_category_id"] == 4) : ?>
-                                                <ul class="list-unstyled">
-                                                   <li class="">Brand :
-                                                      <?= $product["brand"] ?>
+                                                   <li class="">
+                                                      <span id="neckText<?= $product["product_id"] ?>">
+                                                         Neck : <?= $product["neck"] ?>
+                                                      </span>
+                                                      <input value="<?= $product["neck"] ?>" type="text" class="form-control toggle-input" id="neckInput<?= $product["product_id"] ?>">
                                                    </li>
-                                                </ul>
-                                             <?php endif; ?>
-                                          </ul>
+                                                   <li class="">
+                                                      <span id="fingerText<?= $product["product_id"] ?>">
+                                                         FB : <?= $product["fingerboard"] ?>
+                                                      </span>
+                                                      <input value="<?= $product["fingerboard"] ?>" type="text" class="form-control toggle-input" id="fingerInput<?= $product["product_id"] ?>">
+                                                   </li>
+                                                <?php elseif ($product["product_category_id"] == 2) : ?>
+                                                   <ul class="list-unstyled">
+                                                      <li class="">
+                                                         <span id="brandText<?= $product["product_id"] ?>">
+                                                            Brand : <?= $product["brand"] ?>
+                                                         </span>
+                                                         <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                      </li>
+                                                      <li class="">
+                                                         <span id="sizeText<?= $product["product_id"] ?>">
+                                                            Size : <?= $product["size"] ?>
+                                                         </span>
+                                                         <input value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
+                                                      </li>
+                                                   </ul>
+                                                <?php elseif ($product["product_category_id"] == 3) : ?>
+                                                   <ul class="list-unstyled">
+                                                      <li class="">
+                                                         <span id="brandText<?= $product["product_id"] ?>">
+                                                            Brand : <?= $product["brand"] ?>
+                                                         </span>
+                                                         <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                      </li>
+                                                      <li class="">
+                                                         <span id="bowText<?= $product["product_id"] ?>">
+                                                            bow : <?= $product["bow"] ?>
+                                                         </span>
+                                                         <input value="<?= $product["bow"] ?>" type="text" class=" form-control toggle-input" id="bowInput<?= $product["product_id"] ?>">
+                                                      </li>
+                                                   </ul>
+                                                <?php elseif ($product["product_category_id"] == 4) : ?>
+                                                   <ul class="list-unstyled">
+                                                      <li class="">
+                                                         <span id="brandText<?= $product["product_id"] ?>">
+                                                            Brand : <?= $product["brand"] ?>
+                                                         </span>
+                                                         <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                      </li>
+                                                   </ul>
+                                                <?php endif; ?>
+                                             </ul>
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
+                                 <!-- Edit btn -->
+                                 <div class="editBtn h-100 d-flex flex-column justify-content-between align-items-end position-absolute fixed-top">
+                                    <!-- Check -->
+                                    <!-- <i class="bi bi-hand-thumbs-down fs-3 px-3 pb-2"></i> -->
+                                    <!-- Edit -->
+                                    <i class="editBtn bi bi-pencil fs-4 px-3 pt-2" data-product-id="<?= $product["product_id"] ?>"></i>
+
+                                    <!-- Delete -->
+                                    <i class="bi bi-trash3 text-danger fs-4 px-3 pb-2"></i>
+                                 </div>
+
+
+
                               </div>
-
-
-                              <!-- Edit btn -->
-                              <div class="col d-flex justify-content-end align-items-end position-absolute fixed-bottom ">
-                                 <!-- Check -->
-                                 <i class="bi bi-hand-thumbs-down fs-3 px-2 pb-2"></i>
-
-                                 <!-- Edit -->
-                                 <i class="editBtn bi bi-pencil fs-3 px-2 pb-2" data-product-id="<?= $product["product_id"] ?>"></i>
-                                 <!-- Delete -->
-                                 <i class="bi bi-trash3 text-danger fs-3 px-2 pb-2"></i>
-                              </div>
-
                            </div>
                         </div>
                      </div>
-                  </div>
-
+                  </form>
                <?php endforeach; ?>
 
             </div>
          </main>
-
-
 
          <footer class="py-3 bg-light mt-auto">
             <div class="container-fluid px-4">
@@ -339,19 +375,32 @@ $rowcount = $result->num_rows;
    </div>
 
 
-
-
-
    <script>
       const editButtons = document.querySelectorAll(".editBtn");
 
       editButtons.forEach(editBtn => {
          editBtn.addEventListener("click", function() {
             const productId = this.getAttribute("data-product-id");
-            const input = document.querySelector(`#nameInput${productId}`);
-            const introInput = document.querySelector(`#introInput${productId}`);
-            const priceInput = document.querySelector(`#priceInput${productId}`);
-            input.style.display = input.style.display === 'none' ? 'block' : 'none';
+
+            const inputNames = ["name", "brand", "size", "top", "bas", "neck", "finger", "bow", "strings", "num", "price", "intro"];
+            const textNames = ["name", "brand", "size", "top", "bas", "neck", "finger", "bow", "strings", "num", "price", "intro"];
+
+            inputNames.forEach(inputName => {
+               const input = document.querySelector(`#${inputName}Input${productId}`);
+
+               if (input) {
+                  input.style.display = input.style.display === 'none' ? 'inline' : 'none';
+               }
+            });
+            textNames.forEach(textName => {
+               const text = document.querySelector(`#${textName}Text${productId}`);
+               if (text) {
+
+                  text.style.display = text.style.display === 'inline' ? 'none' : 'inline';
+               }
+
+            })
+
          });
       });
    </script>
