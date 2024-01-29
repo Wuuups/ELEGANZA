@@ -57,9 +57,13 @@ $rowcount = $result->num_rows;
          white-space: normal;
       }
 
-      .editBtn {
+      .editBtnArea {
          width: fit-content;
          margin-left: auto;
+      }
+
+      .checkBtn {
+         display: none;
       }
    </style>
 </head>
@@ -179,7 +183,7 @@ $rowcount = $result->num_rows;
                                           <p id="nameText<?= $product["product_id"] ?>">
                                              <?= $product["name"] ?>
                                           </p>
-                                          <input value="<?= $product["name"] ?>" type="text" class="form-control toggle-input" id="nameInput<?= $product["product_id"] ?>">
+                                          <input placeholder="Name" value="<?= $product["name"] ?>" type="text" class="form-control toggle-input" id="nameInput<?= $product["product_id"] ?>">
                                        </div>
                                     </div>
                                     <div class="col">
@@ -188,7 +192,7 @@ $rowcount = $result->num_rows;
                                              $<?= $product["price"] ?>
                                           </p>
 
-                                          <input value="<?= $product["price"] ?>" type="text" class="form-control toggle-input" id="priceInput<?= $product["product_id"] ?>">
+                                          <input placeholder="Price" value="<?= $product["price"] ?>" type="text" class="form-control toggle-input" id="priceInput<?= $product["product_id"] ?>">
                                        </div>
                                     </div>
                                     <div class="col">
@@ -196,7 +200,7 @@ $rowcount = $result->num_rows;
                                           <p id="numText<?= $product["product_id"] ?>">
                                              <?= $product["num"] ?>
                                           </p>
-                                          <input value="<?= $product["num"] ?>" type="text" class="form-control toggle-input" id="numInput<?= $product["product_id"] ?>">
+                                          <input placeholder="num" value="<?= $product["num"] ?>" type="text" class="form-control toggle-input" id="numInput<?= $product["product_id"] ?>">
                                        </div>
                                     </div>
                                     <div class="col">
@@ -211,7 +215,7 @@ $rowcount = $result->num_rows;
 
                            <!-- accordion body -->
                            <div id="collapse<?= $product["product_id"] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $product["product_id"] ?>" data-bs-parent="#accordion<?= $product["product_id"] ?>">
-                              <div class="accordion-body p-3 position-relative">
+                              <div class="accordion-body px-3 py-5 position-relative">
 
                                  <div class="row">
                                     <div class="col">
@@ -248,7 +252,7 @@ $rowcount = $result->num_rows;
                                                       <p id="introText<?= $product["product_id"] ?>">
                                                          <?= $product["introduction"] ?>
                                                       </p>
-                                                      <input value="<?= $product["introduction"] ?>" placeholder="Enter content" type="textarea" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="Introduction" value="<?= $product["introduction"] ?>" type="textarea" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>">
                                                    </div>
                                                 </div>
                                              </div>
@@ -263,37 +267,37 @@ $rowcount = $result->num_rows;
                                                       <span id="brandText<?= $product["product_id"] ?>">
                                                          Brand : <?= $product["brand"] ?>
                                                       </span>
-                                                      <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
                                                    </li>
                                                    <li class="">
                                                       <span id="sizeText<?= $product["product_id"] ?>">
                                                          Size : <?= $product["size"] ?>
                                                       </span>
-                                                      <input value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="Size" value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
                                                    </li>
                                                    <li class="">
                                                       <span id="topText<?= $product["product_id"] ?>">
                                                          Top : <?= $product["top"] ?>
                                                       </span>
-                                                      <input value="<?= $product["top"] ?>" type="text" class="form-control toggle-input" id="topInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="Top" value="<?= $product["top"] ?>" type="text" class="form-control toggle-input" id="topInput<?= $product["product_id"] ?>">
                                                    </li>
                                                    <li class="">
                                                       <span id="basText<?= $product["product_id"] ?>">
                                                          BAS : <?= $product["back_and_sides"] ?>
                                                       </span>
-                                                      <input value="<?= $product["back_and_sides"] ?>" type="text" class="form-control toggle-input" id="basInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="BAS" value="<?= $product["back_and_sides"] ?>" type="text" class="form-control toggle-input" id="basInput<?= $product["product_id"] ?>">
                                                    </li>
                                                    <li class="">
                                                       <span id="neckText<?= $product["product_id"] ?>">
                                                          Neck : <?= $product["neck"] ?>
                                                       </span>
-                                                      <input value="<?= $product["neck"] ?>" type="text" class="form-control toggle-input" id="neckInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="Neck" value="<?= $product["neck"] ?>" type="text" class="form-control toggle-input" id="neckInput<?= $product["product_id"] ?>">
                                                    </li>
                                                    <li class="">
                                                       <span id="fingerText<?= $product["product_id"] ?>">
                                                          FB : <?= $product["fingerboard"] ?>
                                                       </span>
-                                                      <input value="<?= $product["fingerboard"] ?>" type="text" class="form-control toggle-input" id="fingerInput<?= $product["product_id"] ?>">
+                                                      <input placeholder="Fingerboard" value="<?= $product["fingerboard"] ?>" type="text" class="form-control toggle-input" id="fingerInput<?= $product["product_id"] ?>">
                                                    </li>
                                                 <?php elseif ($product["product_category_id"] == 2) : ?>
                                                    <ul class="list-unstyled">
@@ -301,13 +305,13 @@ $rowcount = $result->num_rows;
                                                          <span id="brandText<?= $product["product_id"] ?>">
                                                             Brand : <?= $product["brand"] ?>
                                                          </span>
-                                                         <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
                                                       </li>
                                                       <li class="">
                                                          <span id="sizeText<?= $product["product_id"] ?>">
                                                             Size : <?= $product["size"] ?>
                                                          </span>
-                                                         <input value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
+                                                         <input placeholder="Size" value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>">
                                                       </li>
                                                    </ul>
                                                 <?php elseif ($product["product_category_id"] == 3) : ?>
@@ -316,13 +320,13 @@ $rowcount = $result->num_rows;
                                                          <span id="brandText<?= $product["product_id"] ?>">
                                                             Brand : <?= $product["brand"] ?>
                                                          </span>
-                                                         <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
                                                       </li>
                                                       <li class="">
                                                          <span id="bowText<?= $product["product_id"] ?>">
                                                             bow : <?= $product["bow"] ?>
                                                          </span>
-                                                         <input value="<?= $product["bow"] ?>" type="text" class=" form-control toggle-input" id="bowInput<?= $product["product_id"] ?>">
+                                                         <input placeholder="Bow" value="<?= $product["bow"] ?>" type="text" class=" form-control toggle-input" id="bowInput<?= $product["product_id"] ?>">
                                                       </li>
                                                    </ul>
                                                 <?php elseif ($product["product_category_id"] == 4) : ?>
@@ -331,7 +335,7 @@ $rowcount = $result->num_rows;
                                                          <span id="brandText<?= $product["product_id"] ?>">
                                                             Brand : <?= $product["brand"] ?>
                                                          </span>
-                                                         <input value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
+                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>">
                                                       </li>
                                                    </ul>
                                                 <?php endif; ?>
@@ -341,14 +345,14 @@ $rowcount = $result->num_rows;
                                     </div>
                                  </div>
                                  <!-- Edit btn -->
-                                 <div class="editBtn h-100 d-flex flex-column justify-content-between align-items-end position-absolute fixed-top">
+                                 <div class="editBtnArea h-100 d-flex justify-content-between align-items-end position-absolute fixed-top">
                                     <!-- Check -->
-                                    <!-- <i class="bi bi-hand-thumbs-down fs-3 px-3 pb-2"></i> -->
+                                    <i class="checkBtn bi bi-check2 fs-3 px-3 p-2 pb-1" data-product-id="<?= $product["product_id"] ?>"></i>
                                     <!-- Edit -->
-                                    <i class="editBtn bi bi-pencil fs-4 px-3 pt-2" data-product-id="<?= $product["product_id"] ?>"></i>
+                                    <i class="editBtn bi bi-pencil fs-4 px-3 p-2" data-product-id="<?= $product["product_id"] ?>"></i>
 
                                     <!-- Delete -->
-                                    <i class="bi bi-trash3 text-danger fs-4 px-3 pb-2"></i>
+                                    <i class="bi bi-trash3 text-danger fs-4 px-3 p-2"></i>
                                  </div>
 
 
@@ -373,17 +377,15 @@ $rowcount = $result->num_rows;
 
       </div>
    </div>
-
-
    <script>
-      const editButtons = document.querySelectorAll(".editBtn");
+      const editButtons = document.querySelectorAll(`.editBtn`);
 
       editButtons.forEach(editBtn => {
          editBtn.addEventListener("click", function() {
             const productId = this.getAttribute("data-product-id");
-
             const inputNames = ["name", "brand", "size", "top", "bas", "neck", "finger", "bow", "strings", "num", "price", "intro"];
             const textNames = ["name", "brand", "size", "top", "bas", "neck", "finger", "bow", "strings", "num", "price", "intro"];
+            const checkBtns = document.querySelectorAll(`.checkBtn[data-product-id="${productId}"]`);
 
             inputNames.forEach(inputName => {
                const input = document.querySelector(`#${inputName}Input${productId}`);
@@ -392,20 +394,36 @@ $rowcount = $result->num_rows;
                   input.style.display = input.style.display === 'none' ? 'inline' : 'none';
                }
             });
+
             textNames.forEach(textName => {
                const text = document.querySelector(`#${textName}Text${productId}`);
                if (text) {
-
                   text.style.display = text.style.display === 'inline' ? 'none' : 'inline';
                }
+            });
 
-            })
+            
 
+            checkBtns.forEach(check => {
+               if (check && editBtn) {
+                  console.log("幹你媽的");
+                  editBtn.style.display = editBtn.style.display === 'inline' ? 'none' : 'inline';
+                  check.style.display = check.style.display === 'none' ? 'inline' : 'none';
+
+               }
+            });
          });
       });
    </script>
+
+
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
    <script src="js/scripts.js"></script>
 </body>
 
 </html>
+
+
+<!-- <script>
+  
+</script> -->
