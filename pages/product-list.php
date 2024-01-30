@@ -8,6 +8,10 @@ $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 $rowcount = $result->num_rows;
 
+//product cate
+$catesql = "SELECT * FROM product_category";
+$cateResult = $conn->query($catesql);
+$cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 
 //image
 
@@ -132,18 +136,121 @@ $rowcount = $result->num_rows;
                <div class="d-flex justify-content-between align-items-center my-4">
                   <div>
                      <h1 class="mb-0">PRODUCT LIST</h1>
-                     <div class="d-flex align-content-center">
+                     <!-- <div class="d-flex align-content-center">
                         <i class="bi bi-search fs-3 me-3"></i>
                         <ol class="breadcrumb mb-4">
                            <li class="breadcrumb-item"><a href="index.php">ELEGANZA Studio</a></li>
                            <li class="breadcrumb-item active">Product list</li>
                         </ol>
-                     </div>
+                     </div> -->
                   </div>
                   <div class="d-flex justify-content-end align-items-center flex-grow-1">
-                     <i class="bi bi-plus-lg fs-1 m-2"></i>
+                     <div data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="bi bi-plus-lg fs-1 m-2"></i>
+                     </div>
                   </div>
                </div>
+
+
+
+
+               <!-- CRATE -->
+               <div class="collapse" id="collapseExample">
+                  <div class="card card-body">
+                     <div id="accordionExample">
+                        <ul class="nav nav-tabs">
+
+                           <?php foreach ($cateRows as $cate) : ?>
+                              <li class="nav-item">
+                                 <a class="nav-link" data-bs-toggle="collapse" href="#cateCollapse<?= $cate["type"] ?>"><?= $cate["type"] ?></a>
+                              </li>
+                           <?php endforeach; ?>
+
+
+                        </ul>
+                        <div class="accordion">
+                           <?php foreach ($cateRows as $cate) : ?>
+                              <form action="./product-add.php" method="post">
+                                 <div class="collapse" id="cateCollapse<?= $cate["type"] ?>" data-bs-parent="#accordionExample">
+                                    <div class="card card-body">
+                                       <div class="row">
+                                          <!-- product detail -->
+                                          <div class="col">
+                                             <div>
+                                                <label for="">Name</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">Price</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">Num</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">Brand</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">Size</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">Top</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">BAS</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">Neck</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+                                             <div>
+                                                <label for="">FB</label>
+                                                <input class="form-control" type="text" name="name">
+                                             </div>
+
+
+
+
+
+
+                                          </div>
+
+
+
+                                          <!-- intro -->
+                                          <div class="col">
+                                             0
+
+                                          </div>
+                                          <div class="col">
+                                             0
+                                          </div>
+                                       </div>
+                                       <button
+                                          type="button"
+                                          class="btn btn-primary"
+                                       >
+                                          Add
+                                       </button>
+                                       
+
+                                    </div>
+                                 </div>
+                              </form>
+                           <?php endforeach; ?>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+
+
+
 
                <div class="py-2">
                   <?= $rowcount ?> Products
@@ -238,7 +345,7 @@ $rowcount = $result->num_rows;
                                           <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
                                           <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
                                           <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
+
                                           <?php
                                           // endforeach; 
                                           ?>
@@ -366,7 +473,7 @@ $rowcount = $result->num_rows;
                         </div>
                      </div>
                   </form>
-                  
+
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal<?= $product["product_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                      <div class="modal-dialog">
@@ -376,7 +483,7 @@ $rowcount = $result->num_rows;
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                            </div>
                            <div class="modal-body">
-                                Delete?
+                              Delete?
                            </div>
                            <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
