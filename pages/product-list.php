@@ -54,7 +54,8 @@ $rowcount = $result->num_rows;
       }
 
       .form-control {
-         white-space: normal;
+         padding: 0.275rem;
+         margin: 0;
       }
 
       .editBtnArea {
@@ -62,9 +63,15 @@ $rowcount = $result->num_rows;
          margin-left: auto;
       }
 
-      /* .checkBtn {
-         display: none;
-      } */
+      .editBtn,
+      .deleteBtn {
+         pointer-events: padding-box;
+      }
+
+      .editBtn:hover,
+      .deleteBtn:hover {
+         cursor: pointer;
+      }
    </style>
 </head>
 
@@ -171,7 +178,7 @@ $rowcount = $result->num_rows;
                            <h2 class="accordion-header" id="heading<?= $product["product_id"] ?>">
                               <button class="accordion-button collapsed p-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $product["product_id"] ?>" aria-expanded="false" aria-controls="collapse<?= $product["product_id"] ?>">
 
-                              <input type="hidden" name="editId" value="<?= $product["product_id"] ?>">
+                                 <input type="hidden" name="editId" value="<?= $product["product_id"] ?>">
 
                                  <!-- product -->
                                  <div class="row d-flex col-12 align-items-center">
@@ -216,7 +223,7 @@ $rowcount = $result->num_rows;
 
                            <!-- accordion body -->
                            <div id="collapse<?= $product["product_id"] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $product["product_id"] ?>" data-bs-parent="#accordion<?= $product["product_id"] ?>">
-                              <div class="accordion-body px-3 py-5 position-relative">
+                              <div class="accordion-body px-3 py-4 position-relative">
 
                                  <div class="row">
                                     <div class="col">
@@ -346,23 +353,38 @@ $rowcount = $result->num_rows;
                                     </div>
                                  </div>
                                  <!-- Edit btn -->
-                                 <div class="editBtnArea h-100 d-flex justify-content-between align-items-end position-absolute fixed-top">
+                                 <div class="editBtnArea d-flex justify-content-between align-items-start position-absolute fixed-top">
                                     <!-- Check -->
-                                    <button class="checkBtn bi bi-check2 fs-3 px-3 p-2 pb-1" data-product-id="<?= $product["product_id"] ?>" type="submit"></button>
+                                    <button class="checkBtn border-0 bg-white bi bi-check2 fs-3 px-3 p-2 pb-1" data-product-id="<?= $product["product_id"] ?>" type="submit"></button>
                                     <!-- Edit -->
-                                    <i class="editBtn bi bi-pencil fs-4 px-3 p-2" data-product-id="<?= $product["product_id"] ?>"></i>
-
+                                    <i class="editBtn border-0 bg-white bi bi-pencil fs-4 px-3 p-2" data-product-id="<?= $product["product_id"] ?>"></i>
                                     <!-- Delete -->
-                                    <i class="bi bi-trash3 text-danger fs-4 px-3 p-2"></i>
+                                    <i class="deleteBtn bi border-0 bg-white bi-trash3 text-danger fs-4 px-3 p-2" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $product["product_id"] ?>"></i>
                                  </div>
-
-
-
                               </div>
                            </div>
                         </div>
                      </div>
                   </form>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal<?= $product["product_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h5 class="modal-title"><?= $product["name"] ?></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                           </div>
+                           <div class="modal-body">
+                                Delete?
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <a href="./product-delete.php?product_id=<?= $product["product_id"] ?>" type="button" class="btn btn-danger">Delete</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                <?php endforeach; ?>
 
             </div>
@@ -375,9 +397,11 @@ $rowcount = $result->num_rows;
                </div>
             </div>
          </footer>
-
       </div>
    </div>
+
+
+
    <script>
       const editButtons = document.querySelectorAll(`.editBtn`);
 
@@ -402,17 +426,6 @@ $rowcount = $result->num_rows;
                   text.style.display = text.style.display === 'inline' ? 'none' : 'inline';
                }
             });
-
-            
-
-            // checkBtns.forEach(check => {
-            //    if (check && editBtn) {
-            //       console.log("幹你媽的");
-            //       editBtn.style.display = editBtn.style.display === 'inline' ? 'none' : 'inline';
-            //       check.style.display = check.style.display === 'none' ? 'inline' : 'none';
-
-            //    }
-            // });
          });
       });
    </script>
