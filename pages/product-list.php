@@ -154,98 +154,213 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 
 
 
-               <!-- CRATE -->
+               <!-- ADD -->
                <div class="collapse" id="collapseExample">
-                  <div class="card card-body">
-                     <div id="accordionExample">
-                        <ul class="nav nav-tabs">
 
-                           <?php foreach ($cateRows as $cate) : ?>
-                              <li class="nav-item">
-                                 <a class="nav-link" data-bs-toggle="collapse" href="#cateCollapse<?= $cate["type"] ?>"><?= $cate["type"] ?></a>
-                              </li>
-                           <?php endforeach; ?>
-
-
-                        </ul>
-                        <div class="accordion">
-                           <?php foreach ($cateRows as $cate) : ?>
-                              <form action="./product-add.php" method="post">
-                                 <div class="collapse" id="cateCollapse<?= $cate["type"] ?>" data-bs-parent="#accordionExample">
-                                    <div class="card card-body">
-                                       <div class="row">
-                                          <!-- product detail -->
-                                          <div class="col">
-                                             <div>
-                                                <label for="">Name</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">Price</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">Num</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">Brand</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">Size</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">Top</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">BAS</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">Neck</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
-                                             <div>
-                                                <label for="">FB</label>
-                                                <input class="form-control" type="text" name="name">
-                                             </div>
+                  <div id="accordionExample">
+                     <ul class="nav nav-tabs">
+                        <?php foreach ($cateRows as $cate) : ?>
+                           <li class="nav-item">
+                              <a class="nav-link" style="border-radius:0.375rem ;" data-bs-toggle="collapse" href="#cateCollapse<?= $cate["type"] ?>"><?= $cate["type"] ?></a>
+                           </li>
+                        <?php endforeach; ?>
 
 
+                     </ul>
+                     <div class="accordion mt-3">
+                        <?php foreach ($cateRows as $cate) : ?>
+                           <form action="./product-add.php" method="post">
+                              <input type="hidden" name="addId" value="<?= $cate["product_category_id"] ?>">
 
+                              <div class="collapse" id="cateCollapse<?= $cate["type"] ?>" data-bs-parent="#accordionExample">
 
-
-
+                                 <div class="row g-2">
+                                    <!-- product detail -->
+                                    <div class="col">
+                                       <?php if ($cate["product_category_id"] == 1) : ?>
+                                          <div class="form-floating mb-2">
+                                             <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="nameAdd">
+                                             <label for="floatingInput">Product Name :</label>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="priceAdd">
+                                                   <label for="floatingInput">Price :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="numAdd">
+                                                   <label for="floatingInput">Num :</label>
+                                                </div>
+                                             </div>
                                           </div>
 
-
-
-                                          <!-- intro -->
-                                          <div class="col">
-                                             0
-
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="brandAdd">
+                                                   <label for="floatingInput">Brand :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="sizeAdd">
+                                                   <label for="floatingInput">Size :</label>
+                                                </div>
+                                             </div>
                                           </div>
-                                          <div class="col">
-                                             0
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="topAdd">
+                                                   <label for="floatingInput">Top :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="basAdd">
+                                                   <label for="floatingInput">Bas :</label>
+                                                </div>
+                                             </div>
                                           </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="neckAdd">
+                                                   <label for="floatingInput">Neck :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="fingerAdd">
+                                                   <label for="floatingInput">Fb :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       <?php elseif ($cate["product_category_id"] == 2) : ?>
+                                          <div class="form-floating mb-2">
+                                             <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="nameAdd">
+                                             <label for="floatingInput">Product Name :</label>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="priceAdd">
+                                                   <label for="floatingInput">Price :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="numAdd">
+                                                   <label for="floatingInput">Num :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="brandAdd">
+                                                   <label for="floatingInput">Brand :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="sizeAdd">
+                                                   <label for="floatingInput">Size :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       <?php elseif ($cate["product_category_id"] == 3) : ?>
+                                          <div class="form-floating mb-2">
+                                             <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="nameAdd">
+                                             <label for="floatingInput">Product Name :</label>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="priceAdd">
+                                                   <label for="floatingInput">Price :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="numAdd">
+                                                   <label for="floatingInput">Num :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="brandAdd">
+                                                   <label for="floatingInput">Brand :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="bowAdd">
+                                                   <label for="floatingInput">Bow :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       <?php elseif ($cate["product_category_id"] == 4) : ?>
+                                          <div class="form-floating mb-2">
+                                             <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="nameAdd">
+                                             <label for="floatingInput">Product Name :</label>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="priceAdd">
+                                                   <label for="floatingInput">Price :</label>
+                                                </div>
+                                             </div>
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control" id="floatingInput" placeholder="0000" name="numAdd">
+                                                   <label for="floatingInput">Num :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row g-2">
+                                             <div class="col">
+                                                <div class="form-floating mb-2">
+                                                   <input type="text" class="form-control h-100" id="floatingInput" placeholder="0000" name="brandAdd">
+                                                   <label for="floatingInput">Brand :</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       <?php endif; ?>
+                                    </div>
+
+                                    <!-- intro -->
+                                    <div class="col">
+                                       <div class="form-floating mb-2">
+                                          <textarea type="text" class="form-control" id="floatingInput" placeholder="0000" name="introAdd"></textarea>
+                                          <label for="floatingInput">Introduction :</label>
                                        </div>
-                                       <button
-                                          type="button"
-                                          class="btn btn-primary"
-                                       >
-                                          Add
-                                       </button>
-                                       
 
                                     </div>
-                                 </div>
-                              </form>
-                           <?php endforeach; ?>
-                        </div>
-                     </div>
+                                    <!-- img upload -->
+                                    <div class="col">
+                                       <div class="h-100 w-100 border">
+                                          <!-- <div class="card-body h-100"></div> -->
 
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <button type="submit" class="btn btn-primary">
+                                          Add
+                                       </button>
+
+
+
+                              </div>
+                           </form>
+                        <?php endforeach; ?>
+                     </div>
                   </div>
                </div>
 
@@ -288,7 +403,7 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                                  <input type="hidden" name="editId" value="<?= $product["product_id"] ?>">
 
                                  <!-- product -->
-                                 <div class="row d-flex col-12 align-items-center">
+                                 <div class="row d-flex col-12 align-items-center" style="height: 100px;">
                                     <div class="col text-start">
                                        <div class="align-img text-center">
                                           <img class="objf-cover img" src="../images/<?= $product["img"] ?>" alt="">
@@ -367,7 +482,7 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                                                       <p id="introText<?= $product["product_id"] ?>">
                                                          <?= $product["introduction"] ?>
                                                       </p>
-                                                      <input placeholder="Introduction" value="<?= $product["introduction"] ?>" type="text" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>" name="introEdit">
+                                                      <textarea placeholder="introduction" value="<?= $product["introduction"] ?>" type="text" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>" name="introEdit"><?= $product["introduction"] ?></textarea>
                                                    </div>
                                                 </div>
                                              </div>
@@ -543,8 +658,3 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 </body>
 
 </html>
-
-
-<!-- <script>
-  
-</script> -->
