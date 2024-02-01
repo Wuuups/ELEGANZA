@@ -169,7 +169,7 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                      </ul>
                      <div class="accordion mt-3">
                         <?php foreach ($cateRows as $cate) : ?>
-                           <form action="./product-add.php" method="post">
+                           <form action="./product-add.php" method="post" enctype="multipart/form-data">
                               <input type="hidden" name="addId" value="<?= $cate["product_category_id"] ?>">
 
                               <div class="collapse" id="cateCollapse<?= $cate["type"] ?>" data-bs-parent="#accordionExample">
@@ -341,19 +341,16 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                                           <textarea type="text" class="form-control" id="floatingInput" placeholder="0000" name="introAdd"></textarea>
                                           <label for="floatingInput">Introduction :</label>
                                        </div>
-
-                                    </div>
-                                    <!-- img upload -->
-                                    <div class="col">
-                                       <div class="h-100 w-100 border">
-                                          <!-- <div class="card-body h-100"></div> -->
-
+                                       <div>
+                                          <input type="file" name="images[]" id="images" multiple accept="image/*">
+                                       </div>
+                                       <div>
+                                          <button type="submit" class="btn btn-outline">
+                                             Add
+                                          </button>
                                        </div>
                                     </div>
                                  </div>
-                                 <button type="submit" class="btn btn-primary">
-                                          Add
-                                       </button>
 
 
 
