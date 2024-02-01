@@ -32,7 +32,7 @@ if ($conn->query($sqlAdd) === true) {
       if (in_array($fileType, $allowTypes)) {
          if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $targetFilePath)) {
             // 将每张图片的信息插入 imgs 表
-            $sqlInsertImage = "INSERT INTO imgs ( product_id, pic) VALUES ( '$id',  '$fileName')";
+            $sqlInsertImage = "INSERT INTO imgs (product_id, pic) VALUES ($lastProductId, '$fileName')";
             // 执行图片信息插入查询
             if (!$conn->query($sqlInsertImage)) {
                echo "Error inserting image information: " . $conn->error;

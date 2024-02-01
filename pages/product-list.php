@@ -9,11 +9,15 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 $rowcount = $result->num_rows;
 
 //product cate
-$catesql = "SELECT * FROM product_category";
-$cateResult = $conn->query($catesql);
+$cateSql = "SELECT * FROM product_category";
+$cateResult = $conn->query($cateSql);
 $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 
 //image
+$imgSql = "SELECT * FROM imgs";
+$imgResult = $conn->query($imgSql);
+$imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
+
 
 
 
@@ -136,13 +140,13 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                <div class="d-flex justify-content-between align-items-center my-4">
                   <div>
                      <h1 class="mb-0">PRODUCT LIST</h1>
-                     <!-- <div class="d-flex align-content-center">
+                     <div class="d-flex align-content-center">
                         <i class="bi bi-search fs-3 me-3"></i>
                         <ol class="breadcrumb mb-4">
                            <li class="breadcrumb-item"><a href="index.php">ELEGANZA Studio</a></li>
                            <li class="breadcrumb-item active">Product list</li>
                         </ol>
-                     </div> -->
+                     </div>
                   </div>
                   <div class="d-flex justify-content-end align-items-center flex-grow-1">
                      <div data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -389,7 +393,7 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 
                <?php foreach ($rows as $product) : ?>
 
-                  <form action="product-edit.php" method="post">
+                  <form action="product-edit.php" method="post" enctype="multipart/form-data">
 
                      <!-- product -->
                      <div class="accordion" id="accordion<?= $product["product_id"] ?>">
@@ -447,25 +451,32 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                                  <div class="row">
                                     <div class="col">
                                        <!-- for the img -->
-                                       <h5>All images</h5>
-                                       <div class="pic d-flex flex-wrap align-content-center ">
-                                          <?php
-                                          // foreach() : 
-                                          ?>
-                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
-                                          <img class="img me-3 mb-3 img-thumbnail" src="../images/12809212_800.jpg" alt="">
 
-                                          <?php
-                                          // endforeach; 
-                                          ?>
-                                          <!-- add img -->
-                                          <a class="d-flex justify-content-center align-items-center" href="">
-                                             <i class="bi bi-plus fs-1"></i>
-                                          </a>
+                                       <div class="row">
+                                          <div class="col">
+                                             <!-- for the img -->
+                                             <h5>All images</h5>
+                                             <div class="row justify-content-start">
+
+                                                <?php foreach ($imgRows as $img) : ?>
+                                                   <?php if ($img["product_id"] == $product["product_id"]) { ?>
+                                                      <div class="col-2">
+                                                         <img class="img img-thumbnail" style="width: 100px;" src="../images/<?= $img["pic"] ?>" alt="">
+                                                      </div>
+                                                   <?php } ?>
+                                                <?php endforeach; ?>
+
+                                                <!-- add img -->
+                                                <div class="col">
+                                                   <a class="text-center" id="uploadBtn" style="display: none;">
+                                                      <i class="bi bi-plus fs-1" ></i>
+                                                   </a>
+                                                   <input type="file" name="images[]" id="fileInput" multiple accept="image/*" style="display: none;">
+                                                </div>
+                                             </div>
+                                          </div>
                                        </div>
+
                                     </div>
                                     <div class="col border-start ps-3">
 
@@ -576,7 +587,7 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
                                     <!-- Check -->
                                     <button class="checkBtn border-0 bg-white bi bi-check2 fs-3 px-3 p-2 pb-1" data-product-id="<?= $product["product_id"] ?>" type="submit"></button>
                                     <!-- Edit -->
-                                    <i class="editBtn border-0 bg-white bi bi-pencil fs-4 px-3 p-2" data-product-id="<?= $product["product_id"] ?>"></i>
+                                    <i class="editBtn border-0 bg-white bi bi-pencil fs-4 px-3 p-2" id="fileEdit" data-product-id="<?= $product["product_id"] ?>"></i>
                                     <!-- Delete -->
                                     <i class="deleteBtn bi border-0 bg-white bi-trash3 text-danger fs-4 px-3 p-2" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $product["product_id"] ?>"></i>
                                  </div>
@@ -647,6 +658,17 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
             });
          });
       });
+      $(document).ready(function() {
+         $("#uploadBtn").click(function() {
+            $("#fileInput").click();
+         });
+      });
+      $(document).ready(function() {
+         $("#fileEdit").click(function() {
+            $("#uploadBtn").fadeToggle(); 
+         });
+      });
+      
    </script>
 
 
