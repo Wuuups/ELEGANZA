@@ -132,7 +132,6 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
          </nav>
       </div>
 
-
       <!-- main content -->
       <div id="layoutSidenav_content">
          <main>
@@ -155,9 +154,6 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                   </div>
                </div>
 
-
-
-
                <!-- ADD -->
                <div class="collapse" id="collapseExample">
 
@@ -168,7 +164,6 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                               <a class="nav-link" style="border-radius:0.375rem ;" data-bs-toggle="collapse" href="#cateCollapse<?= $cate["type"] ?>"><?= $cate["type"] ?></a>
                            </li>
                         <?php endforeach; ?>
-
 
                      </ul>
                      <div class="accordion mt-3">
@@ -340,9 +335,9 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                     </div>
 
                                     <!-- intro -->
-                                    <div class="col">
+                                    <div class="col" style="height: 100%;">
                                        <div class="form-floating mb-2">
-                                          <textarea type="text" class="form-control" id="floatingInput" placeholder="0000" name="introAdd"></textarea>
+                                          <textarea type="text" class="form-control" style="height: 100%;" id="floatingInput" placeholder="0000" name="introAdd"></textarea>
                                           <label for="floatingInput">Introduction :</label>
                                        </div>
                                        <div>
@@ -355,18 +350,12 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                        </div>
                                     </div>
                                  </div>
-
-
-
                               </div>
                            </form>
                         <?php endforeach; ?>
                      </div>
                   </div>
                </div>
-
-
-
 
                <div class="py-2">
                   <?= $rowcount ?> Products
@@ -415,7 +404,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                           <p id="nameText<?= $product["product_id"] ?>">
                                              <?= $product["name"] ?>
                                           </p>
-                                          <input placeholder="Name" value="<?= $product["name"] ?>" type="text" class="form-control toggle-input" id="nameInput<?= $product["product_id"] ?>" name="nameEdit">
+                                          <input placeholder="Name" value="<?= $product["name"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="nameEdit">
                                        </div>
                                     </div>
                                     <div class="col">
@@ -423,7 +412,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                           <p id="priceText<?= $product["product_id"] ?>">
                                              $<?= $product["price"] ?>
                                           </p>
-                                          <input placeholder="Price" value="<?= $product["price"] ?>" type="text" class="form-control toggle-input" id="priceInput<?= $product["product_id"] ?>" name="priceEdit">
+                                          <input placeholder="Price" value="<?= $product["price"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="priceEdit">
                                        </div>
                                     </div>
                                     <div class="col">
@@ -431,7 +420,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                           <p id="numText<?= $product["product_id"] ?>">
                                              <?= $product["num"] ?>
                                           </p>
-                                          <input placeholder="num" value="<?= $product["num"] ?>" type="text" class="form-control toggle-input" id="numInput<?= $product["product_id"] ?>" name="numEdit">
+                                          <input placeholder="num" value="<?= $product["num"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="numEdit">
                                        </div>
                                     </div>
                                     <div class="col">
@@ -456,22 +445,27 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                           <div class="col">
                                              <!-- for the img -->
                                              <h5>All images</h5>
-                                             <div class="row justify-content-start">
 
+                                             <div class="d-flex flex-wrap">
                                                 <?php foreach ($imgRows as $img) : ?>
                                                    <?php if ($img["product_id"] == $product["product_id"]) { ?>
-                                                      <div class="col-2">
-                                                         <img class="img img-thumbnail" style="width: 100px;" src="../images/<?= $img["pic"] ?>" alt="">
+                                                      <div class="me-3 mt-2 mb-1 position-relative" style="width: 100px;">
+                                                         <img class="img img-thumbnail" src="../images/<?= $img["pic"] ?>" alt="">
+                                                         <div class="delete-btn text-center border rounded" data-img-id="<?= $img["imgs_id"] ?>" data-href="./product-delete.php" data-method="post">
+                                                            <i class="d-inline-block bi bi-dash fs-3 text-danger"></i>
+                                                         </div>
                                                       </div>
                                                    <?php } ?>
                                                 <?php endforeach; ?>
 
+
+
                                                 <!-- add img -->
-                                                <div class="col">
-                                                   <a class="text-center" id="uploadBtn" style="display: none;">
-                                                      <i class="bi bi-plus fs-1" ></i>
-                                                   </a>
-                                                   <input type="file" name="images[]" id="fileInput" multiple accept="image/*" style="display: none;">
+                                                <div class="d-flex justify-content-center align-content-center mt-3" style="width: 100px; height: 100px">
+                                                   <div class="d-flex justify-content-center align-items-center uploadBtn" id="uploadBtn<?= $product["product_id"] ?>">
+                                                      <i class="bi bi-plus fs-1"></i>
+                                                   </div>
+                                                   <input type="file" name="images[]" id="fileInput<?= $product["product_id"] ?>" multiple accept="image/*" style="display: none;">
                                                 </div>
                                              </div>
                                           </div>
@@ -481,16 +475,15 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                     <div class="col border-start ps-3">
 
                                        <div class="row col-12">
-
                                           <div class="col-6">
-                                             <div class="mb-3 ">
+                                             <div class="mb-3">
                                                 <h5>Introduction</h5>
                                                 <div class="pe-3">
-                                                   <div>
+                                                   <div style="height: 100%;">
                                                       <p id="introText<?= $product["product_id"] ?>">
                                                          <?= $product["introduction"] ?>
                                                       </p>
-                                                      <textarea placeholder="introduction" value="<?= $product["introduction"] ?>" type="text" class="form-control toggle-input" id="introInput<?= $product["product_id"] ?>" name="introEdit"><?= $product["introduction"] ?></textarea>
+                                                      <textarea placeholder="introduction" value="<?= $product["introduction"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="introEdit"><?= $product["introduction"] ?></textarea>
                                                    </div>
                                                 </div>
                                              </div>
@@ -505,37 +498,37 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                                       <span id="brandText<?= $product["product_id"] ?>">
                                                          Brand : <?= $product["brand"] ?>
                                                       </span>
-                                                      <input placeholder="brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>" name="brandEdit">
+                                                      <input placeholder="brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="brandEdit">
                                                    </li>
                                                    <li class="">
                                                       <span id="sizeText<?= $product["product_id"] ?>">
                                                          Size : <?= $product["size"] ?>
                                                       </span>
-                                                      <input placeholder="Size" value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>" name="sizeEdit">
+                                                      <input placeholder="Size" value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="sizeEdit">
                                                    </li>
                                                    <li class="">
                                                       <span id="topText<?= $product["product_id"] ?>">
                                                          Top : <?= $product["top"] ?>
                                                       </span>
-                                                      <input placeholder="Top" value="<?= $product["top"] ?>" type="text" class="form-control toggle-input" id="topInput<?= $product["product_id"] ?>" name="topEdit">
+                                                      <input placeholder="Top" value="<?= $product["top"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="topEdit">
                                                    </li>
                                                    <li class="">
                                                       <span id="basText<?= $product["product_id"] ?>">
                                                          BAS : <?= $product["back_and_sides"] ?>
                                                       </span>
-                                                      <input placeholder="BAS" value="<?= $product["back_and_sides"] ?>" type="text" class="form-control toggle-input" id="basInput<?= $product["product_id"] ?>" name="basEdit">
+                                                      <input placeholder="BAS" value="<?= $product["back_and_sides"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="basEdit">
                                                    </li>
                                                    <li class="">
                                                       <span id="neckText<?= $product["product_id"] ?>">
                                                          Neck : <?= $product["neck"] ?>
                                                       </span>
-                                                      <input placeholder="Neck" value="<?= $product["neck"] ?>" type="text" class="form-control toggle-input" id="neckInput<?= $product["product_id"] ?>" name="neckEdit">
+                                                      <input placeholder="Neck" value="<?= $product["neck"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="neckEdit">
                                                    </li>
                                                    <li class="">
                                                       <span id="fingerText<?= $product["product_id"] ?>">
                                                          FB : <?= $product["fingerboard"] ?>
                                                       </span>
-                                                      <input placeholder="Fingerboard" value="<?= $product["fingerboard"] ?>" type="text" class="form-control toggle-input" id="fingerInput<?= $product["product_id"] ?>" name="fingerEdit">
+                                                      <input placeholder="Fingerboard" value="<?= $product["fingerboard"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="fingerEdit">
                                                    </li>
                                                 <?php elseif ($product["product_category_id"] == 2) : ?>
                                                    <ul class="list-unstyled">
@@ -543,13 +536,13 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                                          <span id="brandText<?= $product["product_id"] ?>">
                                                             Brand : <?= $product["brand"] ?>
                                                          </span>
-                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>" name="brandEdit">
+                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="brandEdit">
                                                       </li>
                                                       <li class="">
                                                          <span id="sizeText<?= $product["product_id"] ?>">
                                                             Size : <?= $product["size"] ?>
                                                          </span>
-                                                         <input placeholder="Size" value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" id="sizeInput<?= $product["product_id"] ?>" name="sizeEdit">
+                                                         <input placeholder="Size" value="<?= $product["size"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="sizeEdit">
                                                       </li>
                                                    </ul>
                                                 <?php elseif ($product["product_category_id"] == 3) : ?>
@@ -558,13 +551,13 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                                          <span id="brandText<?= $product["product_id"] ?>">
                                                             Brand : <?= $product["brand"] ?>
                                                          </span>
-                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>" name="brandEdit">
+                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="brandEdit">
                                                       </li>
                                                       <li class="">
                                                          <span id="bowText<?= $product["product_id"] ?>">
                                                             bow : <?= $product["bow"] ?>
                                                          </span>
-                                                         <input placeholder="Bow" value="<?= $product["bow"] ?>" type="text" class="form-control toggle-input" id="bowInput<?= $product["product_id"] ?>" name="bowEdit">
+                                                         <input placeholder="Bow" value="<?= $product["bow"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="bowEdit">
                                                       </li>
                                                    </ul>
                                                 <?php elseif ($product["product_category_id"] == 4) : ?>
@@ -573,7 +566,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                                          <span id="brandText<?= $product["product_id"] ?>">
                                                             Brand : <?= $product["brand"] ?>
                                                          </span>
-                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" id="brandInput<?= $product["product_id"] ?>" name="brandEdit">
+                                                         <input placeholder="Brand" value="<?= $product["brand"] ?>" type="text" class="form-control toggle-input" data-product-id="<?= $product["product_id"] ?>" name="brandEdit">
                                                       </li>
                                                    </ul>
                                                 <?php endif; ?>
@@ -587,7 +580,8 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                     <!-- Check -->
                                     <button class="checkBtn border-0 bg-white bi bi-check2 fs-3 px-3 p-2 pb-1" data-product-id="<?= $product["product_id"] ?>" type="submit"></button>
                                     <!-- Edit -->
-                                    <i class="editBtn border-0 bg-white bi bi-pencil fs-4 px-3 p-2" id="fileEdit" data-product-id="<?= $product["product_id"] ?>"></i>
+                                    <i class="editBtn border-0 bg-white bi bi-pencil fs-4 px-3 p-2" id="fileEdit<?= $product["product_id"] ?>" data-product-id="<?= $product["product_id"] ?>"></i>
+
                                     <!-- Delete -->
                                     <i class="deleteBtn bi border-0 bg-white bi-trash3 text-danger fs-4 px-3 p-2" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $product["product_id"] ?>"></i>
                                  </div>
@@ -616,10 +610,8 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                      </div>
                   </div>
                <?php endforeach; ?>
-
             </div>
          </main>
-
          <footer class="py-3 bg-light mt-auto">
             <div class="container-fluid px-4">
                <div class="d-flex align-items-center justify-content-end small">
@@ -629,46 +621,92 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
          </footer>
       </div>
    </div>
+   <!-- <script>
+      $(document).ready(function() {
+         $(".editBtn").click(function() {
+            const productId = $(this).data("product-id");
+            const inputElements = $(`.toggle-input[data-product-id="${productId}"]`);
+            inputElements.toggle();
+            $(`.textToggle[data-product-id="${productId}"]`).toggle();
+         });
+
+         $(".uploadBtn").click(function() {
+            $("#" + this.id.replace("uploadBtn", "fileInput")).click();
+         });
+      });
 
 
+      $(document).ready(function() {
+         $(".uploadBtn").click(function() {
+            $("#" + this.id.replace("uploadBtn", "fileInput")).click();
+         });
+      });
+   </script> -->
 
    <script>
-      const editButtons = document.querySelectorAll(`.editBtn`);
+      $(document).ready(function() {
+         // 事件代理，監聽 document 上的點擊事件
+         $(document).on("click", ".toggle-input", function(event) {
+            // 阻止事件冒泡
+            event.stopPropagation();
+         });
 
-      editButtons.forEach(editBtn => {
-         editBtn.addEventListener("click", function() {
-            const productId = this.getAttribute("data-product-id");
-            const inputNames = ["name", "brand", "size", "top", "bas", "neck", "finger", "bow", "strings", "num", "price", "intro"];
-            const textNames = ["name", "brand", "size", "top", "bas", "neck", "finger", "bow", "strings", "num", "price", "intro"];
-            const checkBtns = document.querySelectorAll(`.checkBtn[data-product-id="${productId}"]`);
+         // 其他點擊事件處理程序
+         $(".editBtn").click(function(event) {
+            // 阻止事件冒泡
+            event.stopPropagation();
 
-            inputNames.forEach(inputName => {
-               const input = document.querySelector(`#${inputName}Input${productId}`);
+            const productId = $(this).data("product-id");
+            const inputElements = $(`.toggle-input[data-product-id="${productId}"]`);
+            const spanElements = $(`[id^="brandText${productId}"], [id^="sizeText${productId}"], [id^="topText${productId}"], [id^="basText${productId}"], [id^="neckText${productId}"], [id^="fingerText${productId}"], [id^="bowText${productId}"], [id^="nameText${productId}"], [id^="numText${productId}"], [id^="introText${productId}"], [id^="priceText${productId}"]`);
 
-               if (input) {
-                  input.style.display = input.style.display === 'none' ? 'inline' : 'none';
+            inputElements.toggle();
+            spanElements.toggle();
+         });
+
+         $(".uploadBtn").click(function(event) {
+            // 阻止事件冒泡
+            event.stopPropagation();
+
+            $("#" + this.id.replace("uploadBtn", "fileInput")).click();
+         });
+         $(".accordion-button").click(function(event) {
+            // 阻止事件冒泡
+            event.stopPropagation();
+         });
+      });
+
+
+      //delete img
+      $(document).ready(function() {
+         $(document).on("click", ".delete-btn", function(event) {
+            console.log("click");
+
+
+            // 獲取圖片 ID 和相關信息
+            const imgId = $(this).data("img-id");
+            const href = $(this).data("href");
+            const method = $(this).data("method");
+
+            $.ajax({
+               url: "./product-delete.php",
+               type: "POST",
+               data: {
+                  img_id: imgId
+               }, // 將圖片 ID 傳遞給後端
+               success: function(response) {
+                  // 在這裡處理後端返回的結果
+                  console.log(response);
+                  if (response.success) {
+                     $(`.delete-btn[data-img-id="${imgId}"]`).closest('.position-relative').remove();
+                  }
+               },
+               error: function(error) {
+                  console.error(error);
                }
             });
-
-            textNames.forEach(textName => {
-               const text = document.querySelector(`#${textName}Text${productId}`);
-               if (text) {
-                  text.style.display = text.style.display === 'inline' ? 'none' : 'inline';
-               }
-            });
          });
       });
-      $(document).ready(function() {
-         $("#uploadBtn").click(function() {
-            $("#fileInput").click();
-         });
-      });
-      $(document).ready(function() {
-         $("#fileEdit").click(function() {
-            $("#uploadBtn").fadeToggle(); 
-         });
-      });
-      
    </script>
 
 

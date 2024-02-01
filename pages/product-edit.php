@@ -16,7 +16,8 @@ $finger = trim($_POST["fingerEdit"]);
 $bow = trim($_POST["bowEdit"]);
 
 
-$sql = "UPDATE product SET `name`='$name', price='$price', num='$num', introduction='$intro', brand='$brand', size='$size', top='$top', back_and_sides='$bas', neck='$neck', fingerboard='$finger', bow='$bow' WHERE product_id='$id'";
+$sql = "UPDATE product SET `name`='$name', price='$price', num='$num', introduction='$intro', brand='$brand', size='$size', top='$top', back_and_sides='$bas', neck='$neck', fingerboard='$finger', bow='$bow' WHERE product_id=$id";
+
 
 
 
@@ -43,7 +44,11 @@ foreach ($_FILES['images']['name'] as $key => $val) {
    }
 }
 
-
+if ($conn->query($sql) === TRUE) {
+   echo "Record updated successfully";
+} else {
+   echo "Error updating record: " . $conn->error;
+}
 
 
 header("location: ../pages/product-list.php");
