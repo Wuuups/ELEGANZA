@@ -140,14 +140,24 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
             <div class="container-fluid px-4">
                <div class="d-flex justify-content-between align-items-center my-4">
                   <div>
-                     <h1 class="mb-0">PRODUCT LIST</h1>
-                     <div class="d-flex align-content-center">
-                        <i class="bi bi-search fs-3 me-3"></i>
-                        <ol class="breadcrumb mb-4">
-                           <li class="breadcrumb-item"><a href="index.php">ELEGANZA Studio</a></li>
-                           <li class="breadcrumb-item active">Product list</li>
-                        </ol>
+                     <h1 class="mb-2">PRODUCT LIST</h1>
+                     <!-- <div class="d-flex align-content-center"> -->
+                     <div class="input-group">
+                        <ul class="dropdown-menu dropdown-menu-start">
+                           <li><a class="dropdown-item" href="#">Name</a></li>
+                           <li><a class="dropdown-item" href="#">Brand</a></li>
+                           <li><a class="dropdown-item" href="#">Category</a></li>
+                           <li><a class="dropdown-item" href="#">Status</a></li>                          
+                        </ul>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                           <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                        <button type="button" class="btn btn-outline-secondary">
+                           <i class="bi bi-search fs-5"></i>
+                        </button>
                      </div>
+                     <!-- </div> -->
                   </div>
                   <div class="d-flex justify-content-end align-items-center flex-grow-1">
                      <div data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -387,7 +397,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
 
                   <?php if ($product["num"] == 0 or $product["p_status"] == 2) {
                      $product["p_status"] = "Off Shelf";
-                  } 
+                  }
 
 
                   ?>
