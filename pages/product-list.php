@@ -3,7 +3,7 @@ require_once("../db_violin_connect.php");
 
 
 //product
-$sql = "SELECT * FROM product";
+$sql = "SELECT product.* , product_status.status AS p_status FROM product JOIN product_status ON product.status = product_status.id";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 $rowcount = $result->num_rows;
@@ -17,6 +17,8 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 $imgSql = "SELECT * FROM imgs";
 $imgResult = $conn->query($imgSql);
 $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
+
+
 
 
 
@@ -382,6 +384,14 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
 
                <?php foreach ($rows as $product) : ?>
 
+
+                  <?php if ($product["num"] == 0 or $product["p_status"] == 2) {
+                     $product["p_status"] = "Off Shelf";
+                  } 
+
+
+                  ?>
+
                   <form action="product-edit.php" method="post" enctype="multipart/form-data">
 
                      <!-- product -->
@@ -425,8 +435,13 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                     </div>
                                     <div class="col">
                                        <div>
-                                          On stage
-                                          <!-- put status here -->
+                                          <p id="statusText<?= $product["product_id"] ?>">
+                                             <?= $product["p_status"] ?>
+                                          </p>
+                                          <select class="form-select w-50 toggle-input" aria-label="Default select example" data-product-id="<?= $product["product_id"] ?>" name="statusEdit">
+                                             <option value="1">On Shelf</option>
+                                             <option value="2">Off Shelf</option>
+                                          </select>
                                        </div>
                                     </div>
                                  </div>
@@ -467,13 +482,12 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                                    </div>
                                                    <input type="file" name="images[]" id="fileInput<?= $product["product_id"] ?>" multiple accept="image/*" style="display: none;">
                                                 </div>
+
                                              </div>
                                           </div>
                                        </div>
-
                                     </div>
                                     <div class="col border-start ps-3">
-
                                        <div class="row col-12">
                                           <div class="col-6">
                                              <div class="mb-3">
@@ -621,32 +635,11 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
          </footer>
       </div>
    </div>
-   <!-- <script>
-      $(document).ready(function() {
-         $(".editBtn").click(function() {
-            const productId = $(this).data("product-id");
-            const inputElements = $(`.toggle-input[data-product-id="${productId}"]`);
-            inputElements.toggle();
-            $(`.textToggle[data-product-id="${productId}"]`).toggle();
-         });
-
-         $(".uploadBtn").click(function() {
-            $("#" + this.id.replace("uploadBtn", "fileInput")).click();
-         });
-      });
-
-
-      $(document).ready(function() {
-         $(".uploadBtn").click(function() {
-            $("#" + this.id.replace("uploadBtn", "fileInput")).click();
-         });
-      });
-   </script> -->
 
    <script>
       $(document).ready(function() {
          // 事件代理，監聽 document 上的點擊事件
-         $(document).on("click", ".toggle-input", function(event) {
+         $(document).on("focus", ".toggle-input", function(event) {
             // 阻止事件冒泡
             event.stopPropagation();
          });
@@ -658,7 +651,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
 
             const productId = $(this).data("product-id");
             const inputElements = $(`.toggle-input[data-product-id="${productId}"]`);
-            const spanElements = $(`[id^="brandText${productId}"], [id^="sizeText${productId}"], [id^="topText${productId}"], [id^="basText${productId}"], [id^="neckText${productId}"], [id^="fingerText${productId}"], [id^="bowText${productId}"], [id^="nameText${productId}"], [id^="numText${productId}"], [id^="introText${productId}"], [id^="priceText${productId}"]`);
+            const spanElements = $(`[id^="brandText${productId}"], [id^="sizeText${productId}"], [id^="topText${productId}"], [id^="basText${productId}"], [id^="neckText${productId}"], [id^="fingerText${productId}"], [id^="bowText${productId}"], [id^="nameText${productId}"], [id^="numText${productId}"], [id^="introText${productId}"], [id^="priceText${productId}"], [id^="statusText${productId}"]`);
 
             inputElements.toggle();
             spanElements.toggle();
