@@ -35,7 +35,7 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
    <meta name="description" content="" />
    <meta name="author" content="" />
    <title>Product</title>
-   <link href="css/styles.css" rel="stylesheet" />
+   <link href="css/wupsStyles.css" rel="stylesheet" />
    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
