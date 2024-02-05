@@ -1,9 +1,36 @@
 <?php
 require_once("../db_violin_connect.php");
 
+$brand = "";
+$whereClause = "";
 
-//product
-$sql = "SELECT product.* , product_status.status AS p_status FROM product JOIN product_status ON product.status = product_status.id";
+if (isset($_GET["search"])) {
+
+   $search = $_GET["search"];
+   $whereClause = "WHERE name LIKE '%$search%' AND valid=1";
+} elseif (isset($_GET['brand'])) {
+
+   $brand = $_GET['brand'];
+   $whereClause = "WHERE brand='$brand' AND valid=1";
+} elseif (isset($_GET['category'])) {
+
+   $category = $_GET['category'];
+   $whereClause = "WHERE product_category_id='$category' AND valid=1";
+} elseif (isset($_GET['onShelf'])) {
+
+   $onShelf = $_GET["onShelf"];
+   $whereClause = "WHERE product.status  = 1 AND valid=1";
+} elseif (isset($_GET['offShelf'])) {
+
+   $offShelf = $_GET["offShelf"];
+   $whereClause = "WHERE product.status  = 2 AND valid=1";
+} elseif (isset($_GET['delete'])) {
+
+   $delete = $_GET["delete"];
+   $whereClause = "WHERE valid=0";
+}
+
+$sql = "SELECT product.* , product_status.status AS p_status FROM product JOIN product_status ON product.status = product_status.id $whereClause";
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 $rowcount = $result->num_rows;
@@ -17,8 +44,6 @@ $cateRows = $cateResult->fetch_all(MYSQLI_ASSOC);
 $imgSql = "SELECT * FROM imgs";
 $imgResult = $conn->query($imgSql);
 $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
-
-
 
 
 
@@ -86,6 +111,9 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
+   <?php 
+   // echo $sql;666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+   ?>
    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       <!-- Navbar Brand-->
       <a class="navbar-brand ps-3" href="index.php">ELEGANZA Studio</a>
@@ -141,23 +169,102 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                <div class="d-flex justify-content-between align-items-center my-4">
                   <div>
                      <h1 class="mb-2">PRODUCT LIST</h1>
-                     <!-- <div class="d-flex align-content-center"> -->
-                     <div class="input-group">
-                        <ul class="dropdown-menu dropdown-menu-start">
-                           <li><a class="dropdown-item" href="#">Name</a></li>
-                           <li><a class="dropdown-item" href="#">Brand</a></li>
-                           <li><a class="dropdown-item" href="#">Category</a></li>
-                           <li><a class="dropdown-item" href="#">Status</a></li>                          
-                        </ul>
-                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                           <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
-                        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-                        <button type="button" class="btn btn-outline-secondary">
-                           <i class="bi bi-search fs-5"></i>
-                        </button>
+                     <div class="d-flex align-content-center align-items-center">
+                        <?php if (isset($_GET["search"]) || isset($_GET["brand"]) || isset($_GET["category"]) || isset($_GET["On shelf"]) || isset($_GET["Off shelf"])) : ?>
+                           <div class="py-2">
+                              <a name="" id="" class="btn btn-outline" href="./product-list.php" role="button"><i class="fa-solid fa-arrow-left fa-fw"></i></a>
+                           </div>
+                        <?php endif; ?>
+                        <form action="" method="get">
+                           <div class="input-group">
+                              <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                                 <span class="visually-hidden">Toggle Dropdown</span>
+                              </button>
+                              <ul class="dropdown-menu " id="filterDropdown">
+                                 <li><a class="dropdown-item" href="#" data-filter="name" name="name">Name</a></li>
+                                 <li class="dropdown dropend">
+                                    <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#">Brand</a>
+                                    <ul class="dropdown-menu">
+                                       <?php
+                                       $sqlB = "SELECT * FROM product";
+                                       $resultB = $conn->query($sqlB);
+                                       $brandArr = $resultB->fetch_all(MYSQLI_ASSOC);
+                                       $uniqueBrands = array_unique(array_column($brandArr, 'brand'));
+                                       // print_r($uniqueBrands);
+                                       foreach ($uniqueBrands as $brand) :
+                                       ?>
+                                          <li><a class="dropdown-item" href="product-list.php?brand=<?= $brand ?>" data-filter="<?= $brand ?>" name="brand"><?= $brand ?></a></li>
+                                       <?php endforeach; ?>
+                                    </ul>
+                                 </li>
+                                 <li class="dropdown dropend">
+                                    <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#">Category</a>
+                                    <ul class="dropdown-menu">
+                                       <?php foreach ($cateRows as $cate) : ?>
+                                          <li><a class="dropdown-item" href="product-list.php?category=<?= $cate["product_category_id"] ?>" data-filter="<?= $cate["type"] ?>" name="category"><?= $cate["type"] ?></a></li>
+                                       <?php endforeach; ?>
+                                    </ul>
+                                 </li>
+                                 <li class="dropdown dropend">
+                                    <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#">Status</a>
+                                    <ul class="dropdown-menu">
+                                       <li><a class="dropdown-item" href="product-list.php?onShelf=1" data-filter="onShelf" name="onShelf">ON shelf</a></li>
+                                       <li><a class="dropdown-item" href="product-list.php?offShelf=2" data-filter="offShelf" name="offShelf">OFF shelf</a></li>
+                                    </ul>
+                                 </li>
+                                 <li><a class="dropdown-item" href="product-list.php?delete=0" data-filter="delete" name="delete">Deleted</a></li>
+                              </ul>
+
+                              <input 
+                              type="text" 
+                              class="form-control" 
+                              name="search"
+                              
+                              <?php 
+                                if(isset($_GET["search"])):
+                                $searchValue=$_GET["search"];
+                              ?>
+                               value="<?=$searchValue?>"
+                              <?php endif;?>
+                              <?php 
+                                if(isset($_GET["brand"])):
+                                $brand=$_GET["brand"];
+                              ?>
+                               value="<?=$brand?>"
+                              <?php endif;?>
+                              <?php 
+                              if(isset($_GET["category"])):
+                                 $category = $_GET["category"];
+                              ?>
+                                 <?php if($category == 1):?>
+                                    value="小提琴"
+                                 <?php elseif($category == 2):?>
+                                    value="小提琴盒"
+                                 <?php elseif($category == 3):?>
+                                    value="提琴弓"
+                                 <?php elseif($category == 4):?>
+                                    value="松香" 
+                                 <?php endif;?>
+                              <?php endif;?>
+
+
+                              <?php 
+                                if(isset($_GET["status"])):
+                                $status=$_GET["status"];
+                              ?>
+                               value="<?=$status?>"
+                              <?php endif;?>
+                              
+                              >
+                          
+                                       
+                                
+                              <button type="submit" class="btn btn-outline-secondary">
+                                 <i class="bi bi-search fs-5"></i>
+                              </button>
+                           </div>
+                        </form>
                      </div>
-                     <!-- </div> -->
                   </div>
                   <div class="d-flex justify-content-end align-items-center flex-grow-1">
                      <div data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -352,11 +459,11 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                                           <textarea type="text" class="form-control" style="height: 100%;" id="floatingInput" placeholder="0000" name="introAdd"></textarea>
                                           <label for="floatingInput">Introduction :</label>
                                        </div>
-                                       <div>
-                                          <input type="file" name="images[]" id="images" multiple accept="image/*">
-                                       </div>
-                                       <div>
-                                          <button type="submit" class="btn btn-outline">
+                                       <div class="d-flex flex-colnum justify-content-between h-100 align-items-center">
+                                          <div>
+                                             <input type="file" name="images[]" id="images" multiple accept="image/*">
+                                          </div>
+                                          <button type="submit" class="btn btn-outline text-end ">
                                              Add
                                           </button>
                                        </div>
@@ -395,8 +502,8 @@ $imgRows = $imgResult->fetch_all(MYSQLI_ASSOC);
                <?php foreach ($rows as $product) : ?>
 
 
-                  <?php if ($product["num"] == 0 or $product["p_status"] == 2) {
-                     $product["p_status"] = "Off Shelf";
+                  <?php if ($product["num"] == 0) {
+                     $product["p_status"] == 2;
                   }
 
 
